@@ -1,0 +1,27 @@
+{
+  "name": "hannielapi",
+  "version": "1.0.0",
+  "description": "Api de l'appication web et mobile Hanniel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skym616/hannielApi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Skym616/hannielApi/issues"
+  },
+  "homepage": "https://github.com/Skym616/hannielApi#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "firebase-admin": "^10.2.0"
+  }
+}
