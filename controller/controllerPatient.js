@@ -11,15 +11,20 @@ exports.msg = (req, res) => {
 
 exports.signUp = (req, res) => {
     const {email, password} = req.body;
-    auth.createUser({email: email, password: password}).then((patient) => {
-        db.collection('patient').doc(patient.uid).create(req.body).then((result) => {
-            res.status(201).json({message: "Patient créé avec succès"})
+    if (email && password) {
+        auth.createUser({email: email, password: password}).then((patient) => {
+            db.collection('patient').doc(patient.uid).create(req.body).then((result) => {
+                res.status(201).json({message: "Patient créé avec succès"})
+            }).catch((error) => {
+                res.status(400).json({message: "Erreur lors de la créaation du patient"})
+            });
         }).catch((error) => {
-            res.status(400).json({message: "Erreur lors de la créaation du patient"})
+            res.status(500).json({message: "Erreur lors de la créaation du patient"});
         });
-    }).catch((error) => {
-        res.status(500).json({message: "Erreur lors de la créaation du patient"});
-    });
+    } else {
+        res.status(500).json({message: "identifiant invalide"});
+    }
+    ;
 };
 
 exports.signIn = (req, res) => {
