@@ -10,6 +10,7 @@ exports.msg = (req, res) => {
 }
 
 exports.signUp = (req, res) => {
+    console.log(req.body);
     const {email, password} = req.body;
     if (email && password && email !== "" && password !== "") {
         auth.createUser({email: email, password: password}).then((patient) => {

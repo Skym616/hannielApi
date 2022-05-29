@@ -93,3 +93,7 @@ exports.deleteCampaign = (req, res) => {
         res.status(404).json({message: "Erreur lors de la suppression de la campagne"})
     });
 };
+
+exports.signInDoctor = (req, res) => {
+
+}
