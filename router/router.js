@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const ctrlUser = require('../controller/controllerUser');
+const ctrlPatient = require('../controller/controllerPatient');
 const ctrlPharmacy = require('../controller/controllerPharmacy');
-const ctrlMedecin = require('../controller/controllerMedecin');
+const ctrlHospital = require('../controller/controllerHospital');
+const multer = require('../middleware/multerConfig');
 
-//Route pour le controller User
-router.get('/', ctrlUser.msg);
-router.post('/users', ctrlUser.postUser);
-router.get('/users', ctrlUser.getUsers);
+//Route pour le controller Patient
+router.get('/', ctrlPatient.msg);
+router.post('/patient/signIn', ctrlPatient.signIn);
+router.post('/patient/signUp', ctrlPatient.signUp);
+//router.post('/patient/post', multer, ctrlPatient.post);
 
 //Route pour le controller Pharmacy
 router.post("/pharmacy/signIn", ctrlPharmacy.signIn);
@@ -19,6 +21,14 @@ router.get("/pharmacy/medicament/:idMedicament", ctrlPharmacy.getOneMedicament);
 router.delete("/pharmacy/medicament/:idMedicament", ctrlPharmacy.deleteMedicament);
 
 //Route pour le controller Hospital
+router.post("/hospital/signIn", ctrlHospital.signIn);
+router.post("/hospital/signUp", ctrlHospital.signUp);
+router.post("/hospital/campaign", ctrlHospital.createCampaign);
+router.get("/hospital/campaign", ctrlHospital.getAllCampaign);
+router.get("/hospital/campaign/:idCampaign", ctrlHospital.getOneCampaign);
+router.put("/hospital/campaign/:idCampaign", ctrlHospital.updateCampaign);
+router.put("/hospital/:idHospital", ctrlHospital.updateHospital);
+router.delete("/hospital/campaign/:idCampaign", ctrlHospital.deleteCampaign);
 
 
 module.exports = router;

@@ -11,7 +11,7 @@ exports.signIn = (req, res) => {
             res.status(404).json({message: "pharmacy non trouvé"})
         })
     }).catch((error) => {
-        res.status(500).json({message: "Utilisateur non trouvé ou invalide"})
+        res.status(500).json({message: "pharmacy non trouvé ou invalide"})
     });
 };
 
@@ -19,7 +19,7 @@ exports.signUp = (req, res) => {
     const {email, password} = req.body;
     auth.createUser({email: email, password: password}).then((pharmacy) => {
         const {password, ...obj} = req.body;
-        const newPharmacy = {...obj, pharmacyUid: pharmacy.uid}
+        const newPharmacy = {...obj, pharmacyId: pharmacy.uid}
         db.collection('pharmacy').doc(pharmacy.uid).create(
             newPharmacy
         ).then((result) => {
@@ -42,8 +42,8 @@ exports.createMedicament = (req, res) => {
 
 exports.updateMedicament = (req, res) => {
     const {idMedicament} = req.params;
-    db.collection("medicament").doc(idMedicament).set(
-        req.body, {merge: true}
+    db.collection("medicament").doc(idMedicament).update(
+        req.body
     ).then((result) => {
         res.status(201).json({message: "Medicament mis à jour avec succès"})
     }).catch((error) => {
