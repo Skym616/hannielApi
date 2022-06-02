@@ -50,8 +50,7 @@ exports.signIn = (req, res) => {
 };
 
 exports.post = (req, res) => {
-    console.log(process.env.CLOUDINARY_API_KEY);
-    console.log(req.body.name);
+    console.log(req.body);
     if (req.file) {
         cloudinary.uploader.upload(req.file.path).then((response) => {
             res.send("upload sucess");
