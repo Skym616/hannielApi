@@ -1,4 +1,5 @@
 const admin = require('../admin');
+const jwt = require("jsonwebtoken");
 const db = admin.firestore();
 const auth = admin.auth();
 
@@ -8,7 +9,10 @@ exports.signIn = (req, res) => {
         db.collection('hospital').doc(hospital.uid).get().then((result) => {
             if (result.data().password === password) {
                 const user = {...result.data(), id: result.id}
-                res.status(200).json({message: user});
+                res.status(200).json({
+                    userId: result.id,
+                    token: jwt.sign({userId: result.id}, 'RAMDOM_SECRET_KEY')
+                });
             } else {
                 res.status(404).json({message: "Mot de passe invalide"});
             }
