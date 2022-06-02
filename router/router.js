@@ -37,5 +37,14 @@ router.post("/admin/signIn", ctrlAdmin.signIn);
 router.post("/admin/signUp", ctrlAdmin.signUp);
 router.get('/admin/campaign', auth, ctrlAdmin.getAllCampaign);
 router.get('/admin/campaign/:idCampaign', auth, ctrlAdmin.getOneCampaign);
+router.get('/admin/patient', auth, ctrlAdmin.getAllPatient);
+router.get('/admin/patient/:idPatient', auth, ctrlAdmin.getOnePatient);
+router.get('/admin/medicament', auth, ctrlAdmin.getAllMedicament);
+router.get('/admin/medicament/:idMedicament', auth, ctrlAdmin.getOneMedicament);
+router.get('/admin/pharmacy', auth, ctrlAdmin.getAllPharmacy);
+router.get('/admin/pharmacy/:idPharmacy', auth, ctrlAdmin.getOnePharmacy);
+router.get('/admin/hospital', auth, ctrlAdmin.getAllHospital);
+router.get('/admin/hospital/:idHospital', auth, ctrlAdmin.getOneHospital);
+
 
 module.exports = router;
