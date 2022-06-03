@@ -161,7 +161,7 @@ exports.getAllHospital = (req, res) => {
 
 exports.getOneHospital = (req, res) => {
     const {idHospital} = req.params;
-    db.collection('pharmacy').doc(idHospital).get().then((response) => {
+    db.collection('hospital').doc(idHospital).get().then((response) => {
         const hospital = {...response.data(), id: response.id};
         res.status(200).json({message: hospital});
     }).catch((error) => {
