@@ -44,6 +44,15 @@ exports.signIn = (req, res) => {
     });
 };
 
+exports.getAdmin = (req, res) => {
+    const {idAdmin} = req.params;
+    db.collection('admin').doc(idAdmin).get().then((admin) => {
+        res.status(200).json({message: admin.data()});
+    }).catch((error) => {
+        res.status(404).json({message: "erreur lors de l'obtention de l'admin"});
+    });
+};
+
 exports.getAllCampaign = (req, res) => {
     let tab = [];
     db.collection('campaign').get().then((response) => {

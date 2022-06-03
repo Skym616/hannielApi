@@ -35,6 +35,7 @@ router.delete("/hospital/campaign/:idCampaign", auth, ctrlHospital.deleteCampaig
 //Route pour le controller admin
 router.post("/admin/signIn", ctrlAdmin.signIn);
 router.post("/admin/signUp", ctrlAdmin.signUp);
+router.get("/admin/:idAdmin", ctrlAdmin.getAdmin);
 router.get('/admin/campaign', auth, ctrlAdmin.getAllCampaign);
 router.get('/admin/campaign/:idCampaign', auth, ctrlAdmin.getOneCampaign);
 router.get('/admin/patient', auth, ctrlAdmin.getAllPatient);
