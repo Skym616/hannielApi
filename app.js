@@ -8,7 +8,7 @@ const path = require('path');
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/hanniel', router);
+app.use('/', router);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
