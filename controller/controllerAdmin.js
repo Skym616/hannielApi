@@ -1,8 +1,6 @@
 const admin = require('../admin');
 const auth = admin.auth();
 const db = admin.firestore();
-const storage = admin.storage();
-const fs = require('fs');
 const cloudinary = require('../utils/cloudinaryConfig');
 const jwt = require('jsonwebtoken');
 
