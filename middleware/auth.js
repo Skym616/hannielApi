@@ -9,6 +9,7 @@ module.exports = (req, res, next) => {
             throw "Invalid user ID"
         } else {
             next();
+            console.log("ici");
         }
     } catch {
         res.status(401).json({message: 'Vous n\'êtes pas authorizé à effectuer cette opération'});
