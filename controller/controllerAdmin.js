@@ -222,6 +222,19 @@ exports.deletePharmacy = (req, res) => {
   });
 };
 
+exports.deleteHospital = (req, res) => {
+  const { idHospital } = req.params;
+  auth.deleteUser(idHospital).then((response) => {
+    db.collection('hospital').doc(idHospital).delete().then((
+      res.status(200).json({ message: 'Hospital supprimé avec succès' })
+    )).catch((error) => {
+      res.status(404).status({ message: 'Erreur lors de la supression' });
+    });
+  }).catch((error) => {
+    res.status(404).json({ message: ' Erreur lors de la suppression' });
+  });
+};
+
 exports.createHospital = (req, res) => {
   console.log(req.body.hospital);
   const { email, password } = JSON.parse(req.body.hospital);
