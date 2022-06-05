@@ -168,11 +168,11 @@ exports.getOneHospital = (req, res) => {
 };
 
 exports.createPharmacy = (req, res) => {
-  console.log(req.body);
+  console.log(req.body.pharmacie);
   const { email, password } = req.body;
   if (req.file) {
     cloudinary.uploader.upload(req.file.path).then((response) => {
-      const newPharmacy = { ...req.body, logo: response.secure_url };
+      const newPharmacy = { ...JSON.parse(req.body.pharmacie), logo: response.secure_url };
       if (email && password && email !== '' && password !== '') {
         auth.createUser({ email: email, password: password }).then((pharmacy) => {
           db.collection('pharmacy').doc(pharmacy.uid).create(newPharmacy).then((result) => {
