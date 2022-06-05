@@ -169,7 +169,7 @@ exports.getOneHospital = (req, res) => {
 
 exports.createPharmacy = (req, res) => {
   console.log(req.body.pharmacie);
-  const { email, password } = req.body;
+  const { email, password } = req.body.pharmacie;
   if (req.file) {
     cloudinary.uploader.upload(req.file.path).then((response) => {
       const newPharmacy = { ...JSON.parse(req.body.pharmacie), logo: response.secure_url };
@@ -181,12 +181,15 @@ exports.createPharmacy = (req, res) => {
             res.status(400).json({ message: 'Erreur lors de la créaation du pharmacy' });
           });
         }).catch((error) => {
+          console.log('création phcie');
           res.status(500).json({ message: 'Erreur lors de la créaation du pharmacy' });
         });
       } else {
+        console.log('création phcie id invalide');
         res.status(500).json({ message: 'identifiant invalide' });
       }
     }).catch((error) => {
+      console.log('création phcie hébergement invalide');
       res.status(500).json({ message: 'Erreur lors l\'hébergement de l\'image' });
     });
   } else {
