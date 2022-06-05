@@ -209,19 +209,57 @@ exports.createPharmacy = (req, res) => {
   }
 };
 
+exports.deletePharmacy = (req, res) => {
+  const { idPharmacy } = req.params;
+  auth.deleteUser(idPharmacy).then((response) => {
+    db.collection('pharmacy').doc(idPharmacy).delete().then((
+      res.status(200).json({ message: 'Pharmacy supprimé avec succès' })
+    )).catch((error) => {
+      res.status(404).status({ message: 'Erreur lors de la supression' });
+    });
+  }).catch((error) => {
+    res.status(404).json({ message: ' Erreur lors de la suppression' });
+  });
+};
+
 exports.createHospital = (req, res) => {
-  const { email, password } = req.body;
-  if (email && password && email !== '' && password !== '') {
-    auth.createUser({ email: email, password: password }).then((hospital) => {
-      db.collection('hospital').doc(hospital.uid).create(req.body).then((result) => {
-        res.status(201).json({ message: 'hospital créé avec succès' });
-      }).catch((error) => {
-        res.status(400).json({ message: 'Erreur lors de la créaation du hospital' });
-      });
+  console.log(req.body.hospital);
+  const { email, password } = JSON.parse(req.body.hospital);
+  if (req.file) {
+    cloudinary.uploader.upload(req.file.path).then((response) => {
+      const newHospital = { ...JSON.parse(req.body.hospital), logo: response.secure_url };
+      if (email && password && email !== '' && password !== '') {
+        auth.createUser({ email: email, password: password }).then((hospital) => {
+          db.collection('hospital').doc(hospital.uid).create(newHospital).then((result) => {
+            res.status(201).json({ message: 'hospital créé avec succès' });
+          }).catch((error) => {
+            res.status(400).json({ message: 'Erreur lors de la créaation du hospital' });
+          });
+        }).catch((error) => {
+          console.log('création phcie');
+          res.status(500).json({ message: 'Erreur lors de la créaation du hospital' });
+        });
+      } else {
+        console.log('création phcie id invalide');
+        res.status(500).json({ message: 'identifiant invalide' });
+      }
     }).catch((error) => {
-      res.status(500).json({ message: 'Erreur lors de la créaation du hospital' });
+      console.log('création phcie hébergement invalide');
+      res.status(500).json({ message: 'Erreur lors l\'hébergement de l\'image' });
     });
   } else {
-    res.status(500).json({ message: 'identifiant invalide' });
+    if (email && password && email !== '' && password !== '') {
+      auth.createUser({ email: email, password: password }).then((hospital) => {
+        db.collection('hospital').doc(hospital.uid).create(req.body).then((result) => {
+          res.status(201).json({ message: 'hospital créé avec succès' });
+        }).catch((error) => {
+          res.status(400).json({ message: 'Erreur lors de la créaation du hospital' });
+        });
+      }).catch((error) => {
+        res.status(500).json({ message: 'Erreur lors de la créaation du hospital' });
+      });
+    } else {
+      res.status(500).json({ message: 'identifiant invalide' });
+    }
   }
 };

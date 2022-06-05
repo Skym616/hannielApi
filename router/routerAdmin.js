@@ -18,6 +18,7 @@ router.route('/one/pharmacy/:idPharmacy').get(auth, ctrlAdmin.getOnePharmacy);
 router.route('/all/hospital').get(auth, ctrlAdmin.getAllHospital);
 router.route('/one/hospital/:idHospital').get(auth, ctrlAdmin.getOneHospital);
 router.route('/c/hospital').post(auth, ctrlAdmin.createHospital);
+router.route('/d/hospital/:id').delete(auth, ctrlAdmin.deletePharmacy);
 router.route('/c/pharmacy').post(auth, multer, ctrlAdmin.createPharmacy);
 
 module.exports = router;
