@@ -167,4 +167,36 @@ exports.getOneHospital = (req, res) => {
   });
 };
 
+exports.createPharmacy = (req, res) => {
+  const { email, password } = req.body;
+  if (email && password && email !== '' && password !== '') {
+    auth.createUser({ email: email, password: password }).then((pharmacy) => {
+      db.collection('pharmacy').doc(pharmacy.uid).create(req.body).then((result) => {
+        res.status(201).json({ message: 'pharmacy créé avec succès' });
+      }).catch((error) => {
+        res.status(400).json({ message: 'Erreur lors de la créaation du pharmacy' });
+      });
+    }).catch((error) => {
+      res.status(500).json({ message: 'Erreur lors de la créaation du pharmacy' });
+    });
+  } else {
+    res.status(500).json({ message: 'identifiant invalide' });
+  }
+};
 
+exports.createHospital = (req, res) => {
+  const { email, password } = req.body;
+  if (email && password && email !== '' && password !== '') {
+    auth.createUser({ email: email, password: password }).then((hospital) => {
+      db.collection('hospital').doc(hospital.uid).create(req.body).then((result) => {
+        res.status(201).json({ message: 'hospital créé avec succès' });
+      }).catch((error) => {
+        res.status(400).json({ message: 'Erreur lors de la créaation du hospital' });
+      });
+    }).catch((error) => {
+      res.status(500).json({ message: 'Erreur lors de la créaation du hospital' });
+    });
+  } else {
+    res.status(500).json({ message: 'identifiant invalide' });
+  }
+};
