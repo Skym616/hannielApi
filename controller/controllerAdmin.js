@@ -169,7 +169,7 @@ exports.getOneHospital = (req, res) => {
 
 exports.createPharmacy = (req, res) => {
   console.log(req.body.pharmacie);
-  const { email, password } = req.body.pharmacie;
+  const { email, password } = JSON.parse(req.body.pharmacie);
   if (req.file) {
     cloudinary.uploader.upload(req.file.path).then((response) => {
       const newPharmacy = { ...JSON.parse(req.body.pharmacie), logo: response.secure_url };
