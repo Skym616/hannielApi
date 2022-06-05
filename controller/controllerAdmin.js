@@ -169,18 +169,39 @@ exports.getOneHospital = (req, res) => {
 
 exports.createPharmacy = (req, res) => {
   const { email, password } = req.body;
-  if (email && password && email !== '' && password !== '') {
-    auth.createUser({ email: email, password: password }).then((pharmacy) => {
-      db.collection('pharmacy').doc(pharmacy.uid).create(req.body).then((result) => {
-        res.status(201).json({ message: 'pharmacy créé avec succès' });
-      }).catch((error) => {
-        res.status(400).json({ message: 'Erreur lors de la créaation du pharmacy' });
-      });
+  if (req.file) {
+    cloudinary.uploader.upload(req.file.path).then((response) => {
+      const newPharmacy = { ...req.body, logo: response.secure_url };
+      if (email && password && email !== '' && password !== '') {
+        auth.createUser({ email: email, password: password }).then((pharmacy) => {
+          db.collection('pharmacy').doc(pharmacy.uid).create(newPharmacy).then((result) => {
+            res.status(201).json({ message: 'pharmacy créé avec succès' });
+          }).catch((error) => {
+            res.status(400).json({ message: 'Erreur lors de la créaation du pharmacy' });
+          });
+        }).catch((error) => {
+          res.status(500).json({ message: 'Erreur lors de la créaation du pharmacy' });
+        });
+      } else {
+        res.status(500).json({ message: 'identifiant invalide' });
+      }
     }).catch((error) => {
-      res.status(500).json({ message: 'Erreur lors de la créaation du pharmacy' });
+      res.status(500).json({ message: 'Erreur lors l\'hébergement de l\'image' });
     });
   } else {
-    res.status(500).json({ message: 'identifiant invalide' });
+    if (email && password && email !== '' && password !== '') {
+      auth.createUser({ email: email, password: password }).then((pharmacy) => {
+        db.collection('pharmacy').doc(pharmacy.uid).create(req.body).then((result) => {
+          res.status(201).json({ message: 'pharmacy créé avec succès' });
+        }).catch((error) => {
+          res.status(400).json({ message: 'Erreur lors de la créaation du pharmacy' });
+        });
+      }).catch((error) => {
+        res.status(500).json({ message: 'Erreur lors de la créaation du pharmacy' });
+      });
+    } else {
+      res.status(500).json({ message: 'identifiant invalide' });
+    }
   }
 };
 
