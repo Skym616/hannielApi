@@ -238,6 +238,7 @@ exports.deleteHospital = (req, res) => {
 exports.createHospital = (req, res) => {
   console.log(req.body.hospital);
   const { email, password } = JSON.parse(req.body.hospital);
+  console.log(req.file);
   if (req.file) {
     cloudinary.uploader.upload(req.file.path).then((response) => {
       const newHospital = { ...JSON.parse(req.body.hospital), logo: response.secure_url };
@@ -263,7 +264,7 @@ exports.createHospital = (req, res) => {
   } else {
     if (email && password && email !== '' && password !== '') {
       auth.createUser({ email: email, password: password }).then((hospital) => {
-        db.collection('hospital').doc(hospital.uid).create(req.body).then((result) => {
+        db.collection('hospital').doc(hospital.uid).create(JSON.parse(req.body.hospital)).then((result) => {
           res.status(201).json({ message: 'hospital créé avec succès' });
         }).catch((error) => {
           res.status(400).json({ message: 'Erreur lors de la créaation du hospital' });
