@@ -62,3 +62,27 @@ exports.post = (req, res) => {
     console.log(req.body);
   }
 };
+
+exports.getOnePatient = (req, res) => {
+  console.log('ici patient');
+  const { idPatient } = req.params;
+  console.log(idPatient);
+  db.collection('patient').doc(idPatient).get().then((patient) => {
+    res.status(200).json({ message: patient.data() });
+  }).catch((error) => {
+    res.status(404).json({ message: 'Utilisateur introuvable ou erreur serveur' });
+  });
+};
+
+exports.getAllPharmacy = (req, res) => {
+  let tab = [];
+  db.collection('pharmacy').get().then((response) => {
+    response.forEach((pharmacy) => {
+      const obj = { ...pharmacy.data(), id: pharmacy.id };
+      tab.push(obj);
+    });
+    res.status(200).json({ message: tab });
+  }).catch((error) => {
+    res.status(404).json({ message: 'Une erreur s\'est produite lors de l\'obtention des pharmacies' });
+  });
+};
