@@ -215,10 +215,10 @@ exports.deletePharmacy = (req, res) => {
     db.collection('pharmacy').doc(idPharmacy).delete().then((
       res.status(200).json({ message: 'Pharmacy supprimé avec succès' })
     )).catch((error) => {
-      res.status(404).status({ message: 'Erreur lors de la supression' });
+      res.status(404).status({ message: 'Erreur lors de la supression firestore' });
     });
   }).catch((error) => {
-    res.status(404).json({ message: ' Erreur lors de la suppression' });
+    res.status(404).json({ message: ' Erreur lors de la suppression auth' });
   });
 };
 
