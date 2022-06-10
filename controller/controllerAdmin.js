@@ -195,7 +195,7 @@ exports.createPharmacy = (req, res) => {
   } else {
     if (email && password && email !== '' && password !== '') {
       auth.createUser({ email: email, password: password }).then((pharmacy) => {
-        db.collection('pharmacy').doc(pharmacy.uid).create(req.body).then((result) => {
+        db.collection('pharmacy').doc(pharmacy.uid).create(JSON.parse(req.body.pharmacie)).then((result) => {
           res.status(201).json({ message: 'pharmacy créé avec succès' });
         }).catch((error) => {
           res.status(400).json({ message: 'Erreur lors de la créaation du pharmacy' });
