@@ -278,3 +278,33 @@ exports.createHospital = (req, res) => {
     }
   }
 };
+
+exports.getMedicamentByPharmacy = (req, res) => {
+  const { idPharmacy } = req.params;
+  console.log(idPharmacy);
+  let pharmacyTab = [];
+  db.collection('medicament').where('pharmacyId', '==', idPharmacy).get().then((pharmacy) => {
+    pharmacy.forEach((pharmacy) => {
+      const pharmacyObject = { ...pharmacy.data(), id: pharmacy.id };
+      pharmacyTab.push(pharmacyObject);
+    });
+    res.status(200).json({ message: pharmacyTab });
+  }).catch((error) => {
+    res.status(404).json({ message: 'Aucun medicament trouvé' });
+  });
+};
+
+exports.getCampaignByHospital = (req, res) => {
+  const { idPharmacy } = req.params;
+  console.log(idPharmacy);
+  let campaignTab = [];
+  db.collection('campaign').where('hospitalId', '==', idPharmacy).get().then((campaign) => {
+    campaign.forEach((campaign) => {
+      const campaignObject = { ...campaign.data(), id: campaign.id };
+      campaignTab.push(campaignObject);
+    });
+    res.status(200).json({ message: campaignTab });
+  }).catch((error) => {
+    res.status(404).json({ message: 'Aucun campaign trouvé' });
+  });
+};
