@@ -236,6 +236,7 @@ exports.deleteHospital = (req, res) => {
 };
 
 exports.createHospital = (req, res) => {
+  console.log(req.body);
   console.log(req.body.hospital);
   const { email, password } = JSON.parse(req.body.hospital);
   console.log(req.file);
