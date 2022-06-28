@@ -19,7 +19,7 @@ router.route('/all/pharmacy').get(auth, ctrlAdmin.getAllPharmacy);
 router.route('/one/pharmacy/:idPharmacy').get(auth, ctrlAdmin.getOnePharmacy);
 router.route('/all/hospital').get(auth, ctrlAdmin.getAllHospital);
 router.route('/one/hospital/:idHospital').get(auth, ctrlAdmin.getOneHospital);
-router.route('/c/hospital').post(auth, ctrlAdmin.createHospital);
+router.route('/c/hospital').post(auth, multer, ctrlAdmin.createHospital);
 router.route('/d/pharmacy/:idPharmacy').delete(auth, ctrlAdmin.deletePharmacy);
 router.route('/d/hospital/:idHospital').delete(auth, ctrlAdmin.deleteHospital);
 router.route('/c/pharmacy').post(auth, multer, ctrlAdmin.createPharmacy);
