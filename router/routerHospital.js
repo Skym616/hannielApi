@@ -7,7 +7,7 @@ const auth = require('../middleware/auth');
 router.post('/signIn', ctrlHospital.signIn);
 router.post('/signUp', ctrlHospital.signUp);
 router.put('/:idHospital', auth, ctrlHospital.updateHospital);
-router.post('/campaign', auth, multer, ctrlHospital.createCampaign);
+router.post('/c/campaign', auth, multer, ctrlHospital.createCampaign);
 router.get('/a/campaign/:idHospital', auth, ctrlHospital.getAllCampaign);
 router.get('/g/campaign/:idCampaign', auth, ctrlHospital.getOneCampaign);
 router.put('/u/campaign/:idCampaign', auth, multer, ctrlHospital.updateCampaign);
