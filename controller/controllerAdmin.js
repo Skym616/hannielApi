@@ -178,7 +178,7 @@ exports.createPharmacy = (req, res) => {
           db.collection('pharmacy').doc(pharmacy.uid).create(newPharmacy).then((result) => {
             res.status(201).json({ message: 'pharmacy créé avec succès' });
           }).catch((error) => {
-            res.status(400).json({ message: 'Erreur lors de la créaation du pharmacy' });
+            res.status(500).json({ message: 'Erreur lors de la créaation du pharmacy' });
           });
         }).catch((error) => {
           console.log('création phcie');
@@ -198,7 +198,7 @@ exports.createPharmacy = (req, res) => {
         db.collection('pharmacy').doc(pharmacy.uid).create(JSON.parse(req.body.pharmacie)).then((result) => {
           res.status(201).json({ message: 'pharmacy créé avec succès' });
         }).catch((error) => {
-          res.status(400).json({ message: 'Erreur lors de la créaation du pharmacy' });
+          res.status(500).json({ message: 'Erreur lors de la créaation du pharmacy' });
         });
       }).catch((error) => {
         res.status(500).json({ message: 'Erreur lors de la créaation du pharmacy' });
@@ -248,7 +248,7 @@ exports.createHospital = (req, res) => {
           db.collection('hospital').doc(hospital.uid).create(newHospital).then((result) => {
             res.status(201).json({ message: 'hospital créé avec succès' });
           }).catch((error) => {
-            res.status(400).json({ message: 'Erreur lors de la créaation du hospital' });
+            res.status(500).json({ message: 'Erreur lors de la créaation du hospital' });
           });
         }).catch((error) => {
           console.log('création phcie');
@@ -268,7 +268,7 @@ exports.createHospital = (req, res) => {
         db.collection('hospital').doc(hospital.uid).create(JSON.parse(req.body.hospital)).then((result) => {
           res.status(201).json({ message: 'hospital créé avec succès' });
         }).catch((error) => {
-          res.status(400).json({ message: 'Erreur lors de la créaation du hospital' });
+          res.status(500).json({ message: 'Erreur lors de la créaation du hospital' });
         });
       }).catch((error) => {
         res.status(500).json({ message: 'Erreur lors de la créaation du hospital' });
