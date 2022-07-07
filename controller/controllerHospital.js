@@ -54,7 +54,7 @@ exports.updateHospital = (req, res) => {
 exports.createCampaign = (req, res) => {
   console.log(req.body.campaign);
   console.log(req.file);
-  
+
   if (req.file) {
     cloudinary.uploader.upload(req.file.path).then((response) => {
       const newCampaign = { ...JSON.parse(req.body.campaign), image: response.secure_url };
@@ -86,8 +86,9 @@ exports.getOneCampaign = (req, res) => {
 };
 
 exports.getAllCampaign = (req, res) => {
+  const { idHospital } = req.params;
   let campaignTab = [];
-  db.collection('campaign').get().then((result) => {
+  db.collection('campaign').where('hospitalId', '==', idHospital).get().then((result) => {
     result.docs.forEach((doc) => {
       const campaign = { ...doc.data(), ...{ id: doc.id } };
       campaignTab.push(campaign);

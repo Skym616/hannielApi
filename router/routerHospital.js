@@ -8,9 +8,9 @@ router.post('/signIn', ctrlHospital.signIn);
 router.post('/signUp', ctrlHospital.signUp);
 router.put('/:idHospital', auth, ctrlHospital.updateHospital);
 router.post('/campaign', auth, multer, ctrlHospital.createCampaign);
-router.get('/campaign', auth, ctrlHospital.getAllCampaign);
-router.get('/campaign/:idCampaign', auth, ctrlHospital.getOneCampaign);
-router.put('/campaign/:idCampaign', auth, multer, ctrlHospital.updateCampaign);
-router.delete('/campaign/:idCampaign', auth, ctrlHospital.deleteCampaign);
+router.get('/a/campaign/:idHospital', auth, ctrlHospital.getAllCampaign);
+router.get('/g/campaign/:idCampaign', auth, ctrlHospital.getOneCampaign);
+router.put('/u/campaign/:idCampaign', auth, multer, ctrlHospital.updateCampaign);
+router.delete('/d/campaign/:idCampaign', auth, ctrlHospital.deleteCampaign);
 
 module.exports = router;
