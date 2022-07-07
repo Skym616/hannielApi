@@ -133,46 +133,78 @@ exports.deleteCampaign = (req, res) => {
   });
 };
 
-exports.createDoctor = (req, res) => {
+exports.createMedecin = (req, res) => {
   console.log(req.body);
-  console.log(req.body.hospital);
-  const { email, password } = JSON.parse(req.body.hospital);
+  console.log(req.body.medecin);
+  const { email, password } = JSON.parse(req.body.medecin);
   console.log(req.file);
   if (req.file) {
     cloudinary.uploader.upload(req.file.path).then((response) => {
-      const newHospital = { ...JSON.parse(req.body.hospital), logo: response.secure_url };
+      const newHospital = { ...JSON.parse(req.body.medecin), logo: response.secure_url };
       if (email && password && email !== '' && password !== '') {
-        auth.createUser({ email: email, password: password }).then((hospital) => {
-          db.collection('hospital').doc(hospital.uid).create(newHospital).then((result) => {
-            res.status(201).json({ message: 'hospital créé avec succès' });
+        auth.createUser({ email: email, password: password }).then((medecin) => {
+          db.collection('medecin').doc(medecin.uid).create(newHospital).then((result) => {
+            res.status(201).json({ message: 'medecin créé avec succès' });
           }).catch((error) => {
-            res.status(400).json({ message: 'Erreur lors de la créaation du hospital' });
+            res.status(400).json({ message: 'Erreur lors de la créaation du medecin' });
           });
         }).catch((error) => {
-          console.log('création phcie');
-          res.status(500).json({ message: 'Erreur lors de la créaation du hospital' });
+          console.log('création medecin');
+          res.status(500).json({ message: 'Erreur lors de la créaation du medecin' });
         });
       } else {
-        console.log('création phcie id invalide');
+        console.log('création medecin id invalide');
         res.status(500).json({ message: 'identifiant invalide' });
       }
     }).catch((error) => {
-      console.log('création phcie hébergement invalide');
+      console.log('création medecin hébergement invalide');
       res.status(500).json({ message: 'Erreur lors l\'hébergement de l\'image' });
     });
   } else {
     if (email && password && email !== '' && password !== '') {
-      auth.createUser({ email: email, password: password }).then((hospital) => {
-        db.collection('hospital').doc(hospital.uid).create(JSON.parse(req.body.hospital)).then((result) => {
-          res.status(201).json({ message: 'hospital créé avec succès' });
+      auth.createUser({ email: email, password: password }).then((medecin) => {
+        db.collection('medecin').doc(medecin.uid).create(JSON.parse(req.body.medecin)).then((result) => {
+          res.status(201).json({ message: 'medecin créé avec succès' });
         }).catch((error) => {
-          res.status(400).json({ message: 'Erreur lors de la créaation du hospital' });
+          res.status(400).json({ message: 'Erreur lors de la créaation du medecin' });
         });
       }).catch((error) => {
-        res.status(500).json({ message: 'Erreur lors de la créaation du hospital' });
+        res.status(500).json({ message: 'Erreur lors de la créaation du medecin' });
       });
     } else {
       res.status(500).json({ message: 'identifiant invalide' });
     }
   }
+};
+
+exports.getAllMedecin = (req, res) => {
+  const { idHospital } = req.params;
+  let medecinTab = [];
+  db.collection('medecin').where('hospitalId', '==', idHospital).get().then((result) => {
+    result.docs.forEach((doc) => {
+      const medecin = { ...doc.data(), ...{ id: doc.id } };
+      medecinTab.push(medecin);
+    });
+    res.status(200).json({ message: medecinTab });
+  }).catch((error) => {
+    res.status(404).json({ message: 'Erreur lors de la recupération des campagnes' });
+  });
+};
+
+exports.getOneMedecin = (req, res) => {
+  const { idMedecin } = req.params;
+  db.collection('medecin').doc(idMedecin).get().then((result) => {
+    res.status(201).json({ message: result.data() });
+  }).catch((error) => {
+    res.status(400).json({ message: 'Erreur lors de l\'obtention de  la medecin' });
+  });
+};
+
+exports.deleteMedecin = (req, res) => {
+  const { idMedecin } = req.params;
+  db.collection('medecin').doc(idMedecin).delete().then((result) => {
+    res.status(200).json({ message: 'medecin supprimé avec succès' });
+  }).catch((error) => {
+    res.status(404).json({ message: 'Erreur lors de la suppression de la medecin' });
+  });
 };
