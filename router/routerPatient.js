@@ -10,6 +10,7 @@ router.route('/signUp').post(ctrlPatient.signUp);
 router.route('/update/:userId').put(auth, multer, ctrlPatient.update);
 router.route('/post').post(auth, multer, ctrlPatient.post);
 router.route('/all/pharmacy').get(auth, ctrlPatient.getAllPharmacy);
+router.route('/all/medecin').get(auth, ctrlPatient.getAllMedecin);
 router.route('/g/:idPatient').get(auth, ctrlPatient.getOnePatient);
 
 module.exports = router;

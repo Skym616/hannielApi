@@ -112,3 +112,16 @@ exports.getAllPharmacy = (req, res) => {
   });
 };
 
+exports.getAllMedecin = (req, res) => {
+  let tab = [];
+  db.collection('medecin').get().then((response) => {
+    response.forEach((medecin) => {
+      const obj = { ...medecin.data(), id: medecin.id };
+      tab.push(obj);
+    });
+    res.status(200).json({ message: tab });
+  }).catch((error) => {
+    res.status(404).json({ message: 'Une erreur s\'est produite lors de l\'obtention des medecins' });
+  });
+};
+
