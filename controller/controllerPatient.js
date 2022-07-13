@@ -49,6 +49,31 @@ exports.signIn = (req, res) => {
   });
 };
 
+exports.update = (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+  const { userId } = req.params;
+  if (req.file) {
+    cloudinary.uploader.upload(req.file.path).then((response) => {
+      const newCampaign = { ...JSON.parse(req.body), image: response.secure_url };
+      db.collection('patient').doc(userId).update(newCampaign).then((result) => {
+        res.status(201).json({ message: 'user update avec succès' });
+      }).catch((error) => {
+        res.status(500).json({ message: 'Erreur lors de la user du campaign' });
+      });
+    }).catch((error) => {
+      console.log('update user hébergement invalide');
+      res.status(500).json({ message: 'Erreur lors l\'hébergement de l\'image' });
+    });
+  } else {
+    db.collection('patient').doc(userId).update(JSON.parse(req.body)).then((result) => {
+      res.status(201).json({ message: 'id créé avec succès' });
+    }).catch((error) => {
+      res.status(500).json({ message: 'Erreur lors de l\'update du profil' });
+    });
+  }
+};
+
 exports.post = (req, res) => {
   console.log(req.body);
   if (req.file) {
@@ -86,3 +111,4 @@ exports.getAllPharmacy = (req, res) => {
     res.status(404).json({ message: 'Une erreur s\'est produite lors de l\'obtention des pharmacies' });
   });
 };
+
