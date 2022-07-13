@@ -53,15 +53,17 @@ exports.update = (req, res) => {
   console.log(req.body);
   console.log(req.file);
   const { userId } = req.params;
+  console.log(userId);
   if (req.file) {
     cloudinary.uploader.upload(req.file.path).then((response) => {
-      const newCampaign = { ...JSON.parse(req.body), image: response.secure_url };
-      db.collection('patient').doc(userId).update(newCampaign).then((result) => {
+      const newPatient = { ...req.body, image: response.secure_url };
+      db.collection('patient').doc(userId).update(newPatient).then((result) => {
         res.status(201).json({ message: 'user update avec succès' });
       }).catch((error) => {
         res.status(500).json({ message: 'Erreur lors de la user du campaign' });
       });
     }).catch((error) => {
+      console.log(error);
       console.log('update user hébergement invalide');
       res.status(500).json({ message: 'Erreur lors l\'hébergement de l\'image' });
     });
