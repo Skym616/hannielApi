@@ -62,10 +62,11 @@ exports.updateMedicament = (req, res) => {
 };
 
 exports.getAllMedicament = (req, res) => {
+  const { idPharmacy } = req.params;
   let medicamentTab = [];
-  db.collection('medicament').get().then((result) => {
+  db.collection('medicament').where('pharmacyId', '==', idPharmacy).get().then((result) => {
     result.docs.forEach((doc) => {
-      const medicament = { ...doc.data(), ...{ id: doc.id } };
+      const medicament = { ...doc.data(), id: doc.id };
       medicamentTab.push(medicament);
     });
     res.status(200).json({ message: medicamentTab });

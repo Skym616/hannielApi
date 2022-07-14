@@ -8,7 +8,7 @@ router.route('/signIn').post(ctrlPharmacy.signIn);
 router.route('/signUp').post(ctrlPharmacy.signUp);
 router.route('/c/medicament').post(auth, ctrlPharmacy.createMedicament);
 router.route('/u/medicament/:idMedicament').put(auth, ctrlPharmacy.updateMedicament);
-router.route('/g/medicament').get(auth, ctrlPharmacy.getAllMedicament);
+router.route('/a/medicament/:idPharmacy').get(auth, ctrlPharmacy.getAllMedicament);
 router.route('/g/medicament/:idMedicament').get(auth, ctrlPharmacy.getOneMedicament);
 router.route('/d/medicament/:idMedicament').delete(auth, ctrlPharmacy.deleteMedicament);
 
