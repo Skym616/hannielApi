@@ -4,6 +4,7 @@ const db = admin.firestore();
 const auth = admin.auth();
 
 exports.signIn = (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
   auth.getUserByEmail(email).then((pharmacy) => {
     db.collection('pharmacy').doc(pharmacy.uid).get().then((result) => {
