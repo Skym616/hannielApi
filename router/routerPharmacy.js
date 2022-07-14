@@ -6,10 +6,10 @@ const auth = require('../middleware/auth');
 
 router.route('/signIn').post(ctrlPharmacy.signIn);
 router.route('/signUp').post(ctrlPharmacy.signUp);
-router.route('/medicament').post(auth, ctrlPharmacy.createMedicament);
-router.route('/medicament/:idMedicament').put(auth, ctrlPharmacy.updateMedicament);
-router.route('/medicament').get(auth, ctrlPharmacy.getAllMedicament);
-router.route('/medicament/:idMedicament').get(auth, ctrlPharmacy.getOneMedicament);
-router.route('/medicament/:idMedicament').delete(auth, ctrlPharmacy.deleteMedicament);
+router.route('/c/medicament').post(auth, ctrlPharmacy.createMedicament);
+router.route('/u/medicament/:idMedicament').put(auth, ctrlPharmacy.updateMedicament);
+router.route('/g/medicament').get(auth, ctrlPharmacy.getAllMedicament);
+router.route('/g/medicament/:idMedicament').get(auth, ctrlPharmacy.getOneMedicament);
+router.route('/d/medicament/:idMedicament').delete(auth, ctrlPharmacy.deleteMedicament);
 
 module.exports = router;
